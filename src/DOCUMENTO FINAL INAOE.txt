@@ -1,0 +1,99 @@
+﻿// AND gate
+module AND_gate(input a, b, output out);
+    assign out = a & b;
+endmodule
+
+
+// OR gate
+module OR_gate(input a, b, output out);
+    assign out = a | b;
+endmodule
+
+
+// XOR gate
+module XOR_gate(input a, b, output out);
+    assign out = a ^ b;
+endmodule
+
+
+// 1-bit Full Adder
+module full_adder(input a, b, cin, output sum, carry_out);
+    wire xor_ab, and_ab, and_bc, and_ac;
+   
+    XOR_gate xor1 (.a(a), .b(b), .out(xor_ab));     // XOR(a, b)
+    XOR_gate xor2 (.a(xor_ab), .b(cin), .out(sum)); // XOR(XOR(a, b), cin)
+   
+    AND_gate and1 (.a(a), .b(b), .out(and_ab));     // AND(a, b)
+    AND_gate and2 (.a(b), .b(cin), .out(and_bc));   // AND(b, cin)
+    AND_gate and3 (.a(a), .b(cin), .out(and_ac));   // AND(a, cin)
+   
+    OR_gate or1 (.a(and_ab), .b(and_bc), .out(carry_out_temp1));  // OR(AND(a, b), AND(b, cin))
+    OR_gate or2 (.a(carry_out_temp1), .b(and_ac), .out(carry_out));  // OR(OR(AND(a, b), AND(b, cin)), AND(a, cin))
+endmodule
+
+
+// 8-bit Adder using full adders
+module adder_8_bits(input [7:0] a, b, output [7:0] sum, output carry_out);
+    wire [7:0] carry;
+    assign carry[0] = 0;  // Initial carry_in
+   
+    genvar i;
+    generate
+        for (i = 0; i < 8; i = i + 1) begin : adder_loop
+            full_adder fa (
+                .a(a[i]),
+                .b(b[i]),
+                .cin(carry[i]),
+                .sum(sum[i]),
+                .carry_out(carry[i+1])
+            );
+        end
+    endgenerate
+   
+    assign carry_out = carry[8];  // Final carry_out
+endmodule
+
+
+// Caesar Cipher module
+module caesar_cipher(input [7:0] ascii, input [7:0] key, output [7:0] encrypted_ascii);
+    wire [7:0] sum;
+    wire carry_out;
+   
+    // Use the 8-bit adder to sum the ASCII value and the key
+    adder_8_bits adder (
+        .a(ascii),
+        .b(key),
+        .sum(sum),
+        .carry_out(carry_out)
+    );
+   
+    // If the sum exceeds 'z' (ASCII 122), wrap around
+    assign encrypted_ascii = (sum > 122) ? (sum - 26) : sum;
+endmodule
+
+
+// Testbench to simulate the Caesar cipher
+module test_caesar_cipher;
+    reg [7:0] ascii_char;
+    reg [7:0] key;
+    wire [7:0] encrypted_ascii;
+   
+    // Test the Caesar cipher
+    caesar_cipher cipher (
+        .ascii(ascii_char),
+        .key(key),
+        .encrypted_ascii(encrypted_ascii)
+    );
+   
+    initial begin
+        // Example: Encrypt the character 'z' with the key calculated from a Python example
+        ascii_char = 122;  // ASCII for 'z'
+        key = 102;         // Example key, this can be derived from a Python calculation
+       
+        #10;  // Wait for the result
+       
+        // Display the encrypted result
+        $display("Original ASCII: %d ('%c'), Encrypted ASCII: %d ('%c')",
+                 ascii_char, ascii_char, encrypted_ascii, encrypted_ascii);
+    end
+endmodule
