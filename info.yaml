@@ -1,56 +1,62 @@
 # Tiny Tapeout project information
 project:
-  title:        ""      # Project title
-  author:       ""      # Your name
+  title:        "Code Cipher"      # Project title
+  author:       "Gabriel Omar García Salazar, Leslie Martínez Bello, Lorette Mora Hernández, Miranda García Ugalde"      # Your name
   discord:      ""      # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
-  description:  ""      # One line description of what your project does
+  description:  "The project aims to protect digital information through a Caesar Cipher"      # One line description of what your project does
   language:     "Verilog" # other examples include SystemVerilog, Amaranth, VHDL, etc
-  clock_hz:     0       # Clock frequency in Hz (or 0 if not applicable)
+  clock_hz:     "50000000 Hz"       # Clock frequency in Hz (or 0 if not applicable)
 
   # How many tiles your design occupies? A single tile is about 167x108 uM.
   tiles: "1x1"          # Valid values: 1x1, 1x2, 2x2, 3x2, 4x2, 6x2 or 8x2
 
   # Your top module name must start with "tt_um_". Make it unique by including your github username:
-  top_module:  "tt_um_example"
+  top_module:  "tt_um_gllmcipher"
 
   # List your project's source files here.
   # Source files must be in ./src and you must list each source file separately, one per line.
   # Don't forget to also update `PROJECT_SOURCES` in test/Makefile.
   source_files:
     - "project.v"
+    - "config.json"
+    - "DOCUMENTO FINAL INAOE.txt"
 
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
 # This section is for the datasheet/website. Use descriptive names (e.g., RX, TX, MOSI, SCL, SEG_A, etc.).
 pinout:
   # Inputs
-  ui[0]: ""
-  ui[1]: ""
-  ui[2]: ""
-  ui[3]: ""
-  ui[4]: ""
-  ui[5]: ""
-  ui[6]: ""
-  ui[7]: ""
+  ui[0]: "INPUT_A0_B0" # Receives A0 and B0 as 1 character. It is given by the user.
+  ui[1]: "INPUT_A1_B1" # Receives A1 and B1 as 1 character. It is given by the user.
+  ui[2]: "INPUT_A2_B2" # Receives A2 and B2 as 1 character. It is given by the user.
+  ui[3]: "INPUT_A3_B3" # Receives A3 and B3 as 1 character. It is given by the user.
+  ui[4]: "INPUT_A4_B4" # Receives A4 and B4 as 1 character. It is given by the user.
+  ui[5]: "INPUT_A5_B5" # Receives A5 and B0 as 1 character. It is given by the user.
+  ui[6]: "INPUT_A6_B6" # Receives A6 and B6 as 1 character. It is given by the user.
+  ui[7]: "INPUT_A7_B7" # Receives A7 and B7 as 1 character. It is given by the user.
 
   # Outputs
-  uo[0]: ""
-  uo[1]: ""
-  uo[2]: ""
-  uo[3]: ""
-  uo[4]: ""
-  uo[5]: ""
-  uo[6]: ""
-  uo[7]: ""
+  # WHERE:
+  # Each pin processes a number of the binary code, 1 for A and 1 for B
+  # A = The ASCII code of the letter in binary code
+  # B = The number of places for displacement in Caesar Cipher represented in binary code.
+  uo[0]: "TOTAL_SUM_A0_B0" # Shows results from A0 XOR B0
+  uo[1]: "TOTAL_SUM_A1_B1" # Shows results from A1 XOR B1
+  uo[2]: "TOTAL_SUM_A2_B2" # Shows results from A2 XOR B2
+  uo[3]: "TOTAL_SUM_A3_B3" # Shows results from A3 XOR B3
+  uo[4]: "TOTAL_SUM_A4_B4" # Shows results from A4 XOR B4
+  uo[5]: "TOTAL_SUM_A5_B5" # Shows results from A5 XOR B5
+  uo[6]: "TOTAL_SUM_A6_B6" # Shows results from A6 XOR B6
+  uo[7]: "TOTAL_SUM_A7_B7" # Shows results from A7 XOR B7
 
   # Bidirectional pins
-  uio[0]: ""
-  uio[1]: ""
-  uio[2]: ""
-  uio[3]: ""
-  uio[4]: ""
-  uio[5]: ""
-  uio[6]: ""
-  uio[7]: ""
+  uio[0]: "A0_XOR_B0" # Performs A0 XOR B0
+  uio[1]: "A1_XOR_B1" # Performs A1 XOR B1
+  uio[2]: "A2_XOR_B2" # Performs A2 XOR B2
+  uio[3]: "A3_XOR_B3" # Performs A3 XOR B3
+  uio[4]: "A4_XOR_B4" # Performs A4 XOR B4
+  uio[5]: "A5_XOR_B5" # Performs A5 XOR B5
+  uio[6]: "A6_XOR_B6" # Performs A6 XOR B6
+  uio[7]: "A7_XOR_B7" # Performs A7 XOR B7
 
 # Do not change!
 yaml_version: 6
