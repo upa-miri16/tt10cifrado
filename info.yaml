@@ -1,7 +1,7 @@
 # Tiny Tapeout project information
 project:
   title:        "Code Cipher"      # Project title
-  author:       "Gabriel Omar García Salazar, Leslie Martínez Bello, Lorette Mora Hernández, Miranda García Ugalde"      # Your name
+  author:       "Gabriel Omar Garcia Salazar, Leslie Martinez Bello, Lorette Mora Hernandez, Miranda Garcia Ugalde"      # Your name
   discord:      ""      # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
   description:  "The project aims to protect digital information through a Caesar Cipher"      # One line description of what your project does
   language:     "Verilog" # other examples include SystemVerilog, Amaranth, VHDL, etc
